@@ -3,7 +3,7 @@ package com.aldairgc.credit.application.system.entity
 import jakarta.persistence.*
 
 @Entity
-@Table(name = "Custumer")
+@Table(name = "Customer")
 data class Customer(
     @Column(nullable = false) var firstName: String = "",
     @Column(nullable = false) var lastName: String = "",
@@ -13,7 +13,7 @@ data class Customer(
     @Column(nullable = false) @Embedded var address: Address = Address(),
     @Column(nullable = false) @OneToMany(
         fetch = FetchType.LAZY,
-        cascade = arrayOf(CascadeType.REMOVE, CascadeType.PERSIST),
+        cascade = [CascadeType.REMOVE, CascadeType.PERSIST],
         mappedBy = "customer",
     ) var credits: List<Credit> = mutableListOf(),
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY) val id: Long? = null
