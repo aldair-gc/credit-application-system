@@ -1,14 +1,16 @@
 package com.aldairgc.credit.application.system.dto
 
 import com.aldairgc.credit.application.system.entity.Customer
+import jakarta.validation.constraints.NotBlank
+import jakarta.validation.constraints.NotNull
 import java.math.BigDecimal
 
 data class CustomerUpdateDto(
-    val firstName: String,
-    val lastName: String,
-    val income: BigDecimal,
-    val zipCode: String,
-    val street: String,
+    @field:NotBlank(message = "First name must be fulfilled") val firstName: String,
+    @field:NotBlank(message = "Last name must be fulfilled") val lastName: String,
+    @field:NotNull(message = "Income must be informed") val income: BigDecimal,
+    @field:NotBlank(message = "Zipcode must be fulfilled") val zipCode: String,
+    @field: NotBlank(message = "Street must be fulfilled") val street: String,
 ) {
     fun toEntity(customer: Customer): Customer {
         customer.firstName = this.firstName
