@@ -10,7 +10,8 @@ data class CustomerUpdateDto(
     @field:NotBlank(message = "Last name must be fulfilled") val lastName: String,
     @field:NotNull(message = "Income must be informed") val income: BigDecimal,
     @field:NotBlank(message = "Zipcode must be fulfilled") val zipCode: String,
-    @field: NotBlank(message = "Street must be fulfilled") val street: String,
+    @field:NotBlank(message = "Street must be fulfilled") val street: String,
+    @field:NotBlank(message = "Email must be fulfilled") val email: String,
 ) {
     fun toEntity(customer: Customer): Customer {
         customer.firstName = this.firstName
@@ -18,6 +19,7 @@ data class CustomerUpdateDto(
         customer.income = this.income
         customer.address.zipCode = this.zipCode
         customer.address.street = this.street
+        customer.email = this.email
 
         return customer
     }
