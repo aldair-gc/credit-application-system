@@ -20,11 +20,7 @@ annotation class NotAfterThreeMonths(
 class NotAfterThreeMonthsValidator : ConstraintValidator<NotAfterThreeMonths, LocalDate> {
     override fun initialize(constraintAnnotation: NotAfterThreeMonths) {}
 
-    override fun isValid(value: LocalDate?, context: ConstraintValidatorContext): Boolean {
-        if (value == null) {
-            return true
-        }
-
+    override fun isValid(value: LocalDate, context: ConstraintValidatorContext): Boolean {
         val currentDate = LocalDate.now()
         val futureDateLimit = currentDate.plusMonths(3)
 

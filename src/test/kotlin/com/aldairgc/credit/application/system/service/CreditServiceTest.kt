@@ -102,11 +102,25 @@ class CreditServiceTest {
         val fakeCustomerId = 1L
         val invalidCreditCode: UUID = UUID.randomUUID()
         every { creditRepository.findByCreditCode(invalidCreditCode) } returns null
-        //when//then
+        //when //then
         Assertions.assertThatThrownBy { creditService.findByCreditCode(customerId = fakeCustomerId, creditCode = invalidCreditCode) }
             .isInstanceOf(BusinessException::class.java)
             .hasMessage("CreditCode $invalidCreditCode not found")
         verify(exactly = 1) { creditRepository.findByCreditCode(invalidCreditCode) }
+    }
+
+    @Test
+    fun should_throw_an_IllegalArgumentException_when_credit_has_different_customer() {
+        //given
+        val fakeCustomerId = 1L
+        val fakeCreditCode: UUID = UUID.randomUUID()
+        val fakeCredit: Credit = buildCredit(customer = Customer(id = 2L))
+        every { creditRepository.findByCreditCode(fakeCreditCode) } returns fakeCredit
+        //when //then
+        Assertions.assertThatThrownBy { creditService.findByCreditCode(customerId = fakeCustomerId, creditCode = fakeCreditCode) }
+            .isInstanceOf(IllegalArgumentException::class.java)
+            .hasMessage("Contact admin")
+        verify(exactly = 1) { creditRepository.findByCreditCode(fakeCreditCode) }
     }
 
     private fun buildCredit(
