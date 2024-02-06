@@ -12,6 +12,7 @@ import java.time.LocalDate
 
 data class CreditDto(
     @field:NotNull(message = "Inform a valid value")
+    @field:Positive(message = "Credit value must be positive")
     val creditValue: BigDecimal,
 
     @field:NotNull(message = "Inform the date of first installment")
